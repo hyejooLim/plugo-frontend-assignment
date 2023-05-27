@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Menu, { MenuProps } from 'antd/lib/menu';
+import { RxPerson } from 'react-icons/rx';
 
+import { MenuWrapper, ManageIconWrapper } from '../../styles/layout/Navigation';
 import { useGetCategories } from '../../hooks/query/categories';
-import { MenuWrapper } from '../../styles/layout/Navigation';
 
 const Navigation = () => {
   const { pathname } = useLocation();
   const { data: categories } = useGetCategories();
-
   const [selectedMenu, setSelectedMenu] = useState('');
 
   const menuItems: MenuProps['items'] = [
@@ -65,6 +65,11 @@ const Navigation = () => {
         selectedKeys={[selectedMenu]}
         onClick={handleMenuClick}
       />
+      <ManageIconWrapper>
+        <Link to={'/manage'}>
+          <RxPerson />
+        </Link>
+      </ManageIconWrapper>
     </MenuWrapper>
   );
 };
