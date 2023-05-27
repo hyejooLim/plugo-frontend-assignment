@@ -1,17 +1,14 @@
-import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-import { Product } from '../types';
 import AppLayout from '../components/layout/AppLayout';
 import ProductList from '../components/product/ProductList';
+import { useGetProductsIncludeCategory } from '../hooks/query/products';
 
 const Category = () => {
-  const [products, setProducts] = useState<Product[]>([]);
+  const { id } = useParams();
+  const { data: products, isLoading } = useGetProductsIncludeCategory(Number(id));
 
-  return (
-    <AppLayout>
-      <ProductList products={products} />
-    </AppLayout>
-  );
+  return <AppLayout>{products && <ProductList products={products} isLoading={isLoading} />}</AppLayout>;
 };
 
 export default Category;
