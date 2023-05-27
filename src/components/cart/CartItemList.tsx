@@ -12,10 +12,6 @@ const CartItemList = () => {
   const [selectedItems, setSelectedItems] = useRecoilState(selectedItemsState);
 
   useEffect(() => {
-    setSelectedItems(cartItems);
-  }, [cartItems]);
-
-  useEffect(() => {
     setTotalPrice(getTotalPrice());
   }, [selectedItems]);
 
