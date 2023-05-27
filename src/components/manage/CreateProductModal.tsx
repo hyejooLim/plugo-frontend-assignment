@@ -1,10 +1,11 @@
-import { ChangeEvent, FC, useCallback, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 
 import BasicModal from '../common/BasicModal';
 import { useGetColors } from '../../hooks/query/colors';
 import { useGetCategories } from '../../hooks/query/categories';
 import { useCreateProduct } from '../../hooks/query/product';
+import useInput from '../../hooks/common/useInput';
 import * as S from '../../styles/manage/CreateProductModal';
 
 interface CreateProductModalProps {
@@ -13,9 +14,10 @@ interface CreateProductModalProps {
 }
 
 const CreateProductModal: FC<CreateProductModalProps> = ({ isOpen, onClose }) => {
-  const [name, setName] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
-  const [price, setPrice] = useState(0);
+  const [name, onChangeName, setName] = useInput('');
+  const [imageUrl, onChangeImageUrl, setImageUrl] = useInput('');
+  const [price, onChangePrice, setPrice] = useInput(0);
+
   const [colorId, setColorId] = useState(1);
   const [categoryId, setCategoryId] = useState(1);
 
@@ -47,18 +49,6 @@ const CreateProductModal: FC<CreateProductModalProps> = ({ isOpen, onClose }) =>
     });
 
     handleModalClose();
-  };
-
-  const onChangeName = (e: ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
-  };
-
-  const onChangeImageUrl = (e: ChangeEvent<HTMLInputElement>) => {
-    setImageUrl(e.target.value);
-  };
-
-  const onChangePrice = (e: ChangeEvent<HTMLInputElement>) => {
-    setPrice(Number(e.target.value));
   };
 
   const initModalInput = () => {
