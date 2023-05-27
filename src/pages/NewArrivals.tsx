@@ -1,5 +1,17 @@
+import { useState } from 'react';
+
+import AppLayout from '../components/layout/AppLayout';
+import ProductList from '../components/product/ProductList';
+import { Product } from '../types';
+
 const NewArrivals = () => {
-  return <div>NewArrivals</div>;
+  const [products, setProducts] = useState<Product[]>([]);
+
+  return (
+    <AppLayout>
+      <ProductList products={products} />
+    </AppLayout>
+  );
 };
 
 export default NewArrivals;
