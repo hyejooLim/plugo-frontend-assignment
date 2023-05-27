@@ -1,13 +1,14 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
-import Home from './pages/Home';
-import Products from './pages/Products';
-import NewArrivals from './pages/NewArrivals';
-import Category from './pages/Category';
-import Detail from './pages/Detail';
-import Cart from './pages/Cart';
-import Manage from './pages/Manage';
+import loadable from '@loadable/component';
 import './styles/global.css';
+
+const Home = loadable(() => import('../src/pages/Home'));
+const Products = loadable(() => import('../src/pages/Products'));
+const NewArrivals = loadable(() => import('../src/pages/NewArrivals'));
+const Category = loadable(() => import('../src/pages/Category'));
+const Detail = loadable(() => import('../src/pages/Detail'));
+const Cart = loadable(() => import('../src/pages/Cart'));
+const Manage = loadable(() => import('../src/pages/Manage'));
 
 const App = () => {
   return (
