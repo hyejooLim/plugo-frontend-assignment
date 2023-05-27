@@ -6,7 +6,7 @@ import { ProductListWrapper } from '../../styles/product/ProductList';
 
 interface ProductListProps {
   products: Product[];
-  isLoading?: boolean;
+  isLoading: boolean;
 }
 
 const ProductList: FC<ProductListProps> = ({ products, isLoading }) => {
