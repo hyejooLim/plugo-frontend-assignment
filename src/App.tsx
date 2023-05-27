@@ -7,6 +7,7 @@ import Category from './pages/Category';
 import Detail from './pages/Detail';
 import Cart from './pages/Cart';
 import Manage from './pages/Manage';
+import './styles/global.css';
 
 const App = () => {
   return (
