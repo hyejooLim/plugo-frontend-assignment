@@ -55,8 +55,8 @@
 |:----------|:----------|
 | apis | 서버와의 REST API 통신 |
 | components | 재사용가능한 컴포넌트 |
-| hooks | react-query 관련 Hook, 공통 Hook 작성 |
-| pages | 웹 사이트의 각 페이지를 담당하는 컴포넌트 |
+| hooks | react-query Custom Hook, 공통 Hook 작성 |
+| pages | 웹 사이트의 각 페이지 컴포넌트 |
 | recoil | state를 전역으로 관리하기 위한 atom 작성 |
 | styles | 스타일 관련 컴포넌트 |
 | utils | 유틸리티 함수 작성 |
