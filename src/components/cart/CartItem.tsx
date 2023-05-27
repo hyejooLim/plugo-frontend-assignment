@@ -1,10 +1,10 @@
-import { FC, useState } from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { FC, useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
 import { BsCheckLg } from 'react-icons/bs';
 import { Modal } from 'antd';
 
 import Counter from '../common/Counter';
-import { cartItemsState, selectedItemsState, totalPriceState } from '../../recoil/cart';
+import { cartItemsState, selectedItemsState } from '../../recoil/cart';
 import { CartItem as CartItemType } from '../../types';
 import * as S from '../../styles/cart/CartItem';
 
@@ -15,28 +15,55 @@ interface CartItemProps {
 const CartItem: FC<CartItemProps> = ({ item }) => {
   const [count, setCount] = useState(item.count);
 
-  const setTotalPrice = useSetRecoilState(totalPriceState);
   const [cartItems, setCartItems] = useRecoilState(cartItemsState);
   const [selectedItems, setSelectedItems] = useRecoilState(selectedItemsState);
 
-  const handleOptionPlus = () => {
-    setCount((prev) => prev + 1);
-    setTotalPrice((prev) => prev + item.price);
+  useEffect(() => {
+    setCount(item.count);
+  }, [item.count]);
 
+  const handleOptionPlus = () => {
     const newCartItems = cartItems.map((cartItem) =>
       cartItem.id === item.id ? { ...cartItem, count: cartItem.count + 1 } : cartItem
     );
     setCartItems(newCartItems);
+
+    const existItem = selectedItems.find((selectedItem) => selectedItem.id === item.id);
+
+    if (existItem) {
+      const newSelectedItems = selectedItems.map((selectedItem) =>
+        selectedItem.id === item.id ? { ...selectedItem, count: selectedItem.count + 1 } : selectedItem
+      );
+      setSelectedItems(newSelectedItems);
+    } else {
+      const newSelectedItems = selectedItems.concat({
+        ...item,
+        count: item.count + 1,
+      });
+      setSelectedItems(newSelectedItems);
+    }
   };
 
   const handleOptionMinus = () => {
-    setCount((prev) => prev - 1);
-    setTotalPrice((prev) => prev - item.price);
-
     const newCartItems = cartItems.map((cartItem) =>
       cartItem.id === item.id ? { ...cartItem, count: cartItem.count - 1 } : cartItem
     );
     setCartItems(newCartItems);
+
+    const existItem = selectedItems.find((selectedItem) => selectedItem.id === item.id);
+
+    if (existItem) {
+      const newSelectedItems = selectedItems.map((selectedItem) =>
+        selectedItem.id === item.id ? { ...selectedItem, count: selectedItem.count - 1 } : selectedItem
+      );
+      setSelectedItems(newSelectedItems);
+    } else {
+      const newSelectedItems = selectedItems.concat({
+        ...item,
+        count: item.count - 1,
+      });
+      setSelectedItems(newSelectedItems);
+    }
   };
 
   const handleItemCheckBox = () => {
