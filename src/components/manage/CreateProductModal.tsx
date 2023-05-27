@@ -1,8 +1,9 @@
-import { ChangeEvent, FC, useState } from 'react';
+import { ChangeEvent, FC, useCallback, useState } from 'react';
 
 import BasicModal from '../common/BasicModal';
 import { useGetColors } from '../../hooks/query/colors';
 import { useGetCategories } from '../../hooks/query/categories';
+import { useCreateProduct } from '../../hooks/query/product';
 import * as S from '../../styles/manage/CreateProductModal';
 
 interface CreateProductModalProps {
@@ -14,12 +15,13 @@ const CreateProductModal: FC<CreateProductModalProps> = ({ isOpen, onClose }) =>
   const [name, setName] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [price, setPrice] = useState(0);
-
   const [colorId, setColorId] = useState(1);
   const [categoryId, setCategoryId] = useState(1);
 
   const { data: colors } = useGetColors();
   const { data: categories } = useGetCategories();
+
+  const createProduct = useCreateProduct();
 
   const colorOptions = colors?.map((color) => ({
     value: color.name,
@@ -64,9 +66,17 @@ const CreateProductModal: FC<CreateProductModalProps> = ({ isOpen, onClose }) =>
     setCategoryId(id);
   };
 
-  const handleProductCreate = () => {
-    console.log('상품이 등록되었습니다.');
-  };
+  const handleProductCreate = useCallback(() => {
+    const newProduct = {
+      name,
+      imageUrl,
+      price: Number(price),
+      colorId,
+      categoryId,
+    };
+
+    createProduct.mutate({ data: newProduct });
+  }, [name, imageUrl, price, colorId, categoryId]);
 
   return (
     <>
