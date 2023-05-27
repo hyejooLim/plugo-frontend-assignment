@@ -1,5 +1,9 @@
-import { QueryClient, useMutation } from '@tanstack/react-query';
+import { QueryClient, useMutation, useQuery } from '@tanstack/react-query';
+import { useSetRecoilState } from 'recoil';
+
+import { cartItemsState } from '../../recoil/cart';
 import createCartItems from '../../apis/cartItems/createCartItems';
+import getCartItems from '../../apis/cartItems/getCartItems';
 
 const useCreateCartItems = () => {
   const queryClient = new QueryClient();
@@ -11,4 +15,17 @@ const useCreateCartItems = () => {
   });
 };
 
-export { useCreateCartItems };
+const useGetCartItems = () => {
+  const setCartItems = useSetRecoilState(cartItemsState);
+
+  return useQuery(['cartItems'], getCartItems, {
+    onSuccess: (data) => {
+      setCartItems(data);
+      console.log('cartItems', data);
+    },
+    staleTime: Infinity,
+    refetchOnWindowFocus: false,
+  });
+};
+
+export { useCreateCartItems, useGetCartItems };
