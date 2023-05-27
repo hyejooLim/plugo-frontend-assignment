@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Menu, { MenuProps } from 'antd/lib/menu';
 
+import { useGetCategories } from '../../hooks/query/categories';
 import { MenuWrapper } from '../../styles/layout/Navigation';
-import { Category } from '../../types';
 
 const Navigation = () => {
   const { pathname } = useLocation();
+  const { data: categories } = useGetCategories();
 
   const [selectedMenu, setSelectedMenu] = useState('');
-  const [categories, setCategories] = useState<Category[]>([]);
 
   const menuItems: MenuProps['items'] = [
     {
