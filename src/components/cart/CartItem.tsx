@@ -4,6 +4,7 @@ import { BsCheckLg } from 'react-icons/bs';
 import { Modal } from 'antd';
 
 import Counter from '../common/Counter';
+import { useDeleteCartItem } from '../../hooks/query/cartItem';
 import { cartItemsState, selectedItemsState } from '../../recoil/cart';
 import { CartItem as CartItemType } from '../../types';
 import * as S from '../../styles/cart/CartItem';
@@ -17,6 +18,8 @@ const CartItem: FC<CartItemProps> = ({ item }) => {
 
   const [cartItems, setCartItems] = useRecoilState(cartItemsState);
   const [selectedItems, setSelectedItems] = useRecoilState(selectedItemsState);
+
+  const deleteCartItem = useDeleteCartItem();
 
   useEffect(() => {
     setCount(item.count);
@@ -86,6 +89,8 @@ const CartItem: FC<CartItemProps> = ({ item }) => {
       onOk: () => {
         const newCartItems = cartItems.filter((cartItem) => cartItem.id !== item.id);
         setCartItems(newCartItems);
+
+        deleteCartItem.mutate(item.id);
       },
     });
   };
