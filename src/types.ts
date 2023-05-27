@@ -23,3 +23,8 @@ export type Product = {
   price: number;
   createdAt?: string;
 };
+
+export type SelectedOption = {
+  size: string;
+  count: number;
+};
