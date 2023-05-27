@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import loadable from '@loadable/component';
 
 import ScrollToTop from './utils/scrollToTop';
+import 'react-toastify/dist/ReactToastify.css';
 import './styles/global.css';
 
 const Home = loadable(() => import('../src/pages/Home'));
