@@ -4,6 +4,7 @@ import { IoMdClose } from 'react-icons/io';
 import Loader from '../common/Loader';
 import Counter from '../common/Counter';
 import { Product, SelectedOption } from '../../types';
+import { useCreateCartItems } from '../../hooks/query/cartItems';
 import * as S from '../../styles/product/ProductDetail';
 
 interface ProductDetailProps {
@@ -16,6 +17,8 @@ const sizes = ['XS', 'S', 'M', 'L', 'XL'];
 const ProductDetail: FC<ProductDetailProps> = ({ product, isLoading }) => {
   const [selectedOptions, setSelectedOptions] = useState<SelectedOption[]>([]);
   const [totalPrice, setTotalPrice] = useState(0);
+
+  const createCartItems = useCreateCartItems();
 
   const handleSizeButtonClick = (e: any) => {
     const { size } = e.target.dataset;
@@ -74,7 +77,19 @@ const ProductDetail: FC<ProductDetailProps> = ({ product, isLoading }) => {
       return;
     }
 
-    console.log('selectedOptions', selectedOptions);
+    const { name, color, category, imageUrl, price } = product;
+
+    const newCartItems = selectedOptions.map((option) => ({
+      name,
+      imageUrl,
+      colorId: color.id,
+      categoryId: category?.id,
+      price,
+      size: option.size,
+      count: option.count,
+    }));
+
+    createCartItems.mutate({ data: newCartItems });
   };
 
   const getTotalPrice = useCallback(() => {
