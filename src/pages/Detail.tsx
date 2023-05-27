@@ -8,11 +8,7 @@ const Detail = () => {
   const { id } = useParams();
   const { data: product, isLoading } = useGetProduct(Number(id));
 
-  return (
-    <AppLayout>
-      <ProductDetail product={product} isLoading={isLoading} />
-    </AppLayout>
-  );
+  return <AppLayout>{product && <ProductDetail product={product} isLoading={isLoading} />}</AppLayout>;
 };
 
 export default Detail;
