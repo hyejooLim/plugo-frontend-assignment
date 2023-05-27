@@ -1,5 +1,8 @@
 import { FC, ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Modal } from 'antd';
 import { IoMdClose } from 'react-icons/io';
+import { BsCartCheckFill } from 'react-icons/bs';
 
 import Loader from '../common/Loader';
 import Counter from '../common/Counter';
@@ -15,10 +18,33 @@ interface ProductDetailProps {
 const sizes = ['XS', 'S', 'M', 'L', 'XL'];
 
 const ProductDetail: FC<ProductDetailProps> = ({ product, isLoading }) => {
+  const navigate = useNavigate();
   const [selectedOptions, setSelectedOptions] = useState<SelectedOption[]>([]);
   const [totalPrice, setTotalPrice] = useState(0);
 
   const createCartItems = useCreateCartItems();
+
+  useEffect(() => {
+    if (createCartItems.isSuccess) {
+      loadSuccessModal();
+    }
+  }, [createCartItems.isSuccess]);
+
+  const loadSuccessModal = useCallback(() => {
+    Modal.confirm({
+      icon: <BsCartCheckFill />,
+      content: '선택하신 상품이 장바구니에 추가 되었습니다.',
+      cancelText: '쇼핑 계속하기',
+      okText: '장바구니로 이동',
+      onCancel: () => {
+        setSelectedOptions([]);
+      },
+      onOk: () => {
+        setSelectedOptions([]);
+        navigate('/cart');
+      },
+    });
+  }, []);
 
   const handleSizeButtonClick = (e: any) => {
     const { size } = e.target.dataset;
