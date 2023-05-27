@@ -1,13 +1,12 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Product } from '../types';
 import AppLayout from '../components/layout/AppLayout';
 import ProductCard from '../components/product/ProductCard';
+import { useGetNewProducts } from '../hooks/query/products';
 import { NewArrivalsWrapper, ClickZone } from '../styles/pages/Home';
 
 const Home = () => {
-  const [products, setProducts] = useState<Product[]>([]);
+  const { data: products } = useGetNewProducts();
 
   return (
     <AppLayout>
