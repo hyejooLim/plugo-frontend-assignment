@@ -13,7 +13,7 @@ export type Color = {
 };
 
 export type Product = {
-  id?: number;
+  id: number;
   name: string;
   imageUrl: string;
   category: Category;
