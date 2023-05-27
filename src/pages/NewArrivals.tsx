@@ -5,7 +5,11 @@ import { useGetNewProducts } from '../hooks/query/products';
 const NewArrivals = () => {
   const { data: products, isLoading } = useGetNewProducts();
 
-  return <AppLayout>{products && <ProductList products={products} isLoading={isLoading} />}</AppLayout>;
+  return (
+    <AppLayout>
+      <ProductList products={products} isLoading={isLoading} />
+    </AppLayout>
+  );
 };
 
 export default NewArrivals;

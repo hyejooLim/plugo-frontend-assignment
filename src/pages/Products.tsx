@@ -5,7 +5,11 @@ import { useGetProducts } from '../hooks/query/products';
 const Products = () => {
   const { data: products, isLoading } = useGetProducts();
 
-  return <AppLayout>{products && <ProductList products={products} isLoading={isLoading} />}</AppLayout>;
+  return (
+    <AppLayout>
+      <ProductList products={products} isLoading={isLoading} />
+    </AppLayout>
+  );
 };
 
 export default Products;

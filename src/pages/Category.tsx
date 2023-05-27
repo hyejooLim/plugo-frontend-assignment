@@ -8,7 +8,11 @@ const Category = () => {
   const { id } = useParams();
   const { data: products, isLoading } = useGetProductsIncludeCategory(Number(id));
 
-  return <AppLayout>{products && <ProductList products={products} isLoading={isLoading} />}</AppLayout>;
+  return (
+    <AppLayout>
+      <ProductList products={products} isLoading={isLoading} />
+    </AppLayout>
+  );
 };
 
 export default Category;
