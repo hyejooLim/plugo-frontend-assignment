@@ -12,7 +12,7 @@ import * as S from '../../styles/product/ProductDetail';
 
 interface ProductDetailProps {
   product: Product;
-  isLoading?: boolean;
+  isLoading: boolean;
 }
 
 const sizes = ['XS', 'S', 'M', 'L', 'XL'];
