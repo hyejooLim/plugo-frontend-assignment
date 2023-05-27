@@ -6,7 +6,7 @@ import ProductCard from './ProductCard';
 import { ProductListWrapper } from '../../styles/product/ProductList';
 
 interface ProductListProps {
-  products?: Product[];
+  products: Product[];
   isLoading: boolean;
 }
 
