@@ -1,6 +1,7 @@
 import { ChangeEvent, FC, useState } from 'react';
 
 import BasicModal from '../common/BasicModal';
+import { useGetColors } from '../../hooks/query/colors';
 import { useGetCategories } from '../../hooks/query/categories';
 import * as S from '../../styles/manage/CreateProductModal';
 
@@ -13,9 +14,17 @@ const CreateProductModal: FC<CreateProductModalProps> = ({ isOpen, onClose }) =>
   const [name, setName] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [price, setPrice] = useState(0);
+
+  const [colorId, setColorId] = useState(1);
   const [categoryId, setCategoryId] = useState(1);
 
+  const { data: colors } = useGetColors();
   const { data: categories } = useGetCategories();
+
+  const colorOptions = colors?.map((color) => ({
+    value: color.name,
+    label: color.name,
+  }));
 
   const categoryOptions = categories?.map((category) => ({
     value: category.name,
@@ -45,6 +54,11 @@ const CreateProductModal: FC<CreateProductModalProps> = ({ isOpen, onClose }) =>
     initModalInput();
   };
 
+  const handleColorChange = (value: string) => {
+    const id = colors?.find((color) => color.name === value).id;
+    setColorId(id);
+  };
+
   const handleCategoryChange = (value: string) => {
     const id = categories?.find((category) => category.name === value).id;
     setCategoryId(id);
@@ -67,6 +81,11 @@ const CreateProductModal: FC<CreateProductModalProps> = ({ isOpen, onClose }) =>
             <label>ImageUrl</label>
             <br />
             <S.StyledInput value={imageUrl} onChange={onChangeImageUrl} type='text' required />
+          </div>
+          <div className='input_form'>
+            <label>Color</label>
+            <br />
+            <S.StyledSelect defaultValue='red' options={colorOptions} onChange={handleColorChange} />
           </div>
           <div className='input_form'>
             <label>Category</label>
