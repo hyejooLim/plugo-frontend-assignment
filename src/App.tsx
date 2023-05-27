@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import loadable from '@loadable/component';
+
+import ScrollToTop from './utils/scrollToTop';
 import './styles/global.css';
 
 const Home = loadable(() => import('../src/pages/Home'));
@@ -13,6 +15,7 @@ const Manage = loadable(() => import('../src/pages/Manage'));
 const App = () => {
   return (
     <Router>
+      <ScrollToTop />
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/products' element={<Products />} />
