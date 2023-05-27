@@ -1,17 +1,11 @@
-import { useState } from 'react';
-
 import AppLayout from '../components/layout/AppLayout';
 import ProductList from '../components/product/ProductList';
-import { Product } from '../types';
+import { useGetNewProducts } from '../hooks/query/products';
 
 const NewArrivals = () => {
-  const [products, setProducts] = useState<Product[]>([]);
+  const { data: products, isLoading } = useGetNewProducts();
 
-  return (
-    <AppLayout>
-      <ProductList products={products} />
-    </AppLayout>
-  );
+  return <AppLayout>{products && <ProductList products={products} isLoading={isLoading} />}</AppLayout>;
 };
 
 export default NewArrivals;
