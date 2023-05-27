@@ -1,4 +1,5 @@
-import { ChangeEvent, FC, useCallback, useState } from 'react';
+import { ChangeEvent, FC, useCallback, useEffect, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
 
 import BasicModal from '../common/BasicModal';
 import { useGetColors } from '../../hooks/query/colors';
@@ -20,7 +21,6 @@ const CreateProductModal: FC<CreateProductModalProps> = ({ isOpen, onClose }) =>
 
   const { data: colors } = useGetColors();
   const { data: categories } = useGetCategories();
-
   const createProduct = useCreateProduct();
 
   const colorOptions = colors?.map((color) => ({
@@ -32,6 +32,22 @@ const CreateProductModal: FC<CreateProductModalProps> = ({ isOpen, onClose }) =>
     value: category.name,
     label: category.name,
   }));
+
+  useEffect(() => {
+    if (createProduct.isSuccess) {
+      successCreateProduct();
+    }
+  }, [createProduct.isSuccess]);
+
+  const successCreateProduct = () => {
+    toast.success('상품이 등록되었습니다.', {
+      autoClose: 2000,
+      position: toast.POSITION.TOP_RIGHT,
+      hideProgressBar: true,
+    });
+
+    handleModalClose();
+  };
 
   const onChangeName = (e: ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -110,6 +126,7 @@ const CreateProductModal: FC<CreateProductModalProps> = ({ isOpen, onClose }) =>
           <S.CreateButton htmlType='submit'>CREATE</S.CreateButton>
         </S.StyledForm>
       </BasicModal>
+      <ToastContainer />
     </>
   );
 };
