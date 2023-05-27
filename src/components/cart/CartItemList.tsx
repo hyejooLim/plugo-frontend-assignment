@@ -12,13 +12,12 @@ const CartItemList = () => {
   const [selectedItems, setSelectedItems] = useRecoilState(selectedItemsState);
 
   useEffect(() => {
-    console.log('selected', selectedItems);
-  }, [selectedItems]);
+    setSelectedItems(cartItems);
+  }, [cartItems]);
 
   useEffect(() => {
-    setSelectedItems(cartItems);
     setTotalPrice(getTotalPrice());
-  }, [cartItems]);
+  }, [selectedItems]);
 
   const handleAllItemCheck = () => {
     if (selectedItems?.length === cartItems?.length) {
@@ -29,8 +28,8 @@ const CartItemList = () => {
   };
 
   const getTotalPrice = useCallback(() => {
-    return cartItems?.reduce((acc, item) => acc + item.price * item.count, 0);
-  }, [cartItems]);
+    return selectedItems?.reduce((acc, item) => acc + item.price * item.count, 0);
+  }, [selectedItems]);
 
   return (
     <>
