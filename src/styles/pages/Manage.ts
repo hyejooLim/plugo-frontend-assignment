@@ -1,15 +1,18 @@
 import styled from 'styled-components';
 
 export const ManageWrapper = styled.div`
-  width: 620px;
-  height: 300px;
-  margin: 0 auto;
-  text-align: center;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  height: 83%;
 
+  .content_container {
+    width: 620px;
+    height: 300px;
+    margin: 0 auto;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
   .center_area {
     display: flex;
     align-items: center;
