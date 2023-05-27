@@ -28,3 +28,14 @@ export type SelectedOption = {
   size: string;
   count: number;
 };
+
+export type CartItem = {
+  id: number;
+  name: string;
+  color: Color;
+  category: Category;
+  imageUrl: string;
+  price: number;
+  size: string;
+  count: number;
+};
