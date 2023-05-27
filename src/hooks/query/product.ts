@@ -15,9 +15,6 @@ const useCreateProduct = () => {
 
 const useGetProduct = (id: number) =>
   useQuery(['product', id], () => getProduct(id), {
-    onSuccess: (data) => {
-      console.log('product', data);
-    },
     staleTime: Infinity,
     refetchOnWindowFocus: false,
   });

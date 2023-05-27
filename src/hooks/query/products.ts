@@ -6,27 +6,18 @@ import getProductsIncludeCategory from '../../apis/products/getProductsIncludeCa
 
 const useGetProducts = () =>
   useQuery(['products'], getProducts, {
-    onSuccess: (data) => {
-      console.log('products', data);
-    },
     staleTime: Infinity,
     refetchOnWindowFocus: false,
   });
 
 const useGetNewProducts = () =>
   useQuery(['products', 'new'], getNewProducts, {
-    onSuccess: (data) => {
-      console.log('newProducts', data);
-    },
     staleTime: Infinity,
     refetchOnWindowFocus: false,
   });
 
 const useGetProductsIncludeCategory = (id: number) =>
   useQuery(['products', 'category', id], () => getProductsIncludeCategory(id), {
-    onSuccess: (data) => {
-      console.log('productsIncludeCategory', data);
-    },
     staleTime: Infinity,
     refetchOnWindowFocus: false,
   });

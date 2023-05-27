@@ -21,7 +21,6 @@ const useGetCartItems = () => {
   return useQuery(['cartItems'], getCartItems, {
     onSuccess: (data) => {
       setCartItems(data);
-      console.log('cartItems', data);
     },
     staleTime: Infinity,
     refetchOnWindowFocus: false,
