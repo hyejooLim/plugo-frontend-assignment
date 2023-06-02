@@ -147,8 +147,8 @@ const ProductDetail: FC<ProductDetailProps> = ({ product, isLoading }) => {
             <div className='size_selected_zone'>
               <p>Size</p>
               <ul onClick={handleSizeButtonClick}>
-                {sizes.map((size) => (
-                  <button className='size' data-size={size}>
+                {sizes.map((size, idx) => (
+                  <button key={idx} className='size' data-size={size}>
                     {size}
                   </button>
                 ))}
