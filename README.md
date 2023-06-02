@@ -70,3 +70,28 @@ npm run start
 
 </br>
 
+## 데모 영상
+### Home Page
+<img src="https://github.com/hyejooLim/plugo-frontend-assignment/assets/71072930/27b167bc-fb12-4a16-add6-0b36777db458" />
+
+</br></br>
+
+### Product List Page
+<img src="https://github.com/hyejooLim/plugo-frontend-assignment/assets/71072930/0f0a3495-7d1b-4838-a265-538bb261565b" />
+
+</br></br>
+
+### Product Detail Page
+<img src="https://github.com/hyejooLim/plugo-frontend-assignment/assets/71072930/cb02bd9c-6b86-47a9-aa39-da046a3f0457" />
+
+</br></br>
+
+### Cart Detail Page
+<img src="https://github.com/hyejooLim/plugo-frontend-assignment/assets/71072930/c84152e2-4f01-48e9-b306-7671e5af8279" />
+
+</br></br>
+
+### Manage Page
+<img src="https://github.com/hyejooLim/plugo-frontend-assignment/assets/71072930/0bcde663-9e35-4a93-9996-28edb464e1df" />
+
+</br>
