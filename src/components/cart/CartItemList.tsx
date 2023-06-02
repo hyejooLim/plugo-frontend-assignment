@@ -38,7 +38,7 @@ const CartItemList = () => {
             {cartItems.length > 0 ? (
               <ul>
                 {cartItems?.map((item) => (
-                  <CartItem item={item} />
+                  <CartItem key={item.id} item={item} />
                 ))}
               </ul>
             ) : (
