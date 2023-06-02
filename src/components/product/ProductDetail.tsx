@@ -22,13 +22,13 @@ const ProductDetail: FC<ProductDetailProps> = ({ product, isLoading }) => {
   const [selectedOptions, setSelectedOptions] = useState<SelectedOption[]>([]);
   const [totalPrice, setTotalPrice] = useState(0);
 
-  const createCartItems = useCreateCartItems();
+  const { mutate: createCartItems, isSuccess: isSuccessCreateCartItems } = useCreateCartItems();
 
   useEffect(() => {
-    if (createCartItems.isSuccess) {
+    if (isSuccessCreateCartItems) {
       loadSuccessModal();
     }
-  }, [createCartItems.isSuccess]);
+  }, [isSuccessCreateCartItems]);
 
   const loadSuccessModal = useCallback(() => {
     Modal.confirm({
@@ -115,7 +115,7 @@ const ProductDetail: FC<ProductDetailProps> = ({ product, isLoading }) => {
       count: option.count,
     }));
 
-    createCartItems.mutate({ data: newCartItems });
+    createCartItems({ data: newCartItems });
   };
 
   const getTotalPrice = useCallback(() => {

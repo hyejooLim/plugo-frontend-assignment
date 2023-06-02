@@ -19,7 +19,7 @@ const CartItem: FC<CartItemProps> = ({ item }) => {
   const [cartItems, setCartItems] = useRecoilState(cartItemsState);
   const [selectedItems, setSelectedItems] = useRecoilState(selectedItemsState);
 
-  const deleteCartItem = useDeleteCartItem();
+  const { mutate: deleteCartItem } = useDeleteCartItem();
 
   useEffect(() => {
     setCount(item.count);
@@ -90,7 +90,7 @@ const CartItem: FC<CartItemProps> = ({ item }) => {
         const newCartItems = cartItems.filter((cartItem) => cartItem.id !== item.id);
         setCartItems(newCartItems);
 
-        deleteCartItem.mutate(item.id);
+        deleteCartItem(item.id);
       },
     });
   };

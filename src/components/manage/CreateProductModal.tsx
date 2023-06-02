@@ -23,7 +23,7 @@ const CreateProductModal: FC<CreateProductModalProps> = ({ isOpen, onClose }) =>
 
   const { data: colors } = useGetColors();
   const { data: categories } = useGetCategories();
-  const createProduct = useCreateProduct();
+  const { mutate: createProduct, isSuccess: isSuccessCreateProduct } = useCreateProduct();
 
   const colorOptions = colors?.map((color) => ({
     value: color.name,
@@ -36,10 +36,10 @@ const CreateProductModal: FC<CreateProductModalProps> = ({ isOpen, onClose }) =>
   }));
 
   useEffect(() => {
-    if (createProduct.isSuccess) {
+    if (isSuccessCreateProduct) {
       successCreateProduct();
     }
-  }, [createProduct.isSuccess]);
+  }, [isSuccessCreateProduct]);
 
   const successCreateProduct = () => {
     toast.success('상품이 등록되었습니다.', {
@@ -81,7 +81,7 @@ const CreateProductModal: FC<CreateProductModalProps> = ({ isOpen, onClose }) =>
       categoryId,
     };
 
-    createProduct.mutate({ data: newProduct });
+    createProduct({ data: newProduct });
   }, [name, imageUrl, price, colorId, categoryId]);
 
   return (
