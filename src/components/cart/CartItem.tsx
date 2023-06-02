@@ -21,6 +21,11 @@ const CartItem: FC<CartItemProps> = ({ item }) => {
 
   const { mutate: deleteCartItem } = useDeleteCartItem();
 
+  const isExistItem = () => {
+    const existItem = selectedItems.find((selectedItem) => selectedItem.id === item.id);
+    return existItem ? true : false;
+  };
+
   useEffect(() => {
     setCount(item.count);
   }, [item.count]);
@@ -31,9 +36,9 @@ const CartItem: FC<CartItemProps> = ({ item }) => {
     );
     setCartItems(newCartItems);
 
-    const existItem = selectedItems.find((selectedItem) => selectedItem.id === item.id);
+    const isExist = isExistItem();
 
-    if (existItem) {
+    if (isExist) {
       const newSelectedItems = selectedItems.map((selectedItem) =>
         selectedItem.id === item.id ? { ...selectedItem, count: selectedItem.count + 1 } : selectedItem
       );
@@ -53,9 +58,9 @@ const CartItem: FC<CartItemProps> = ({ item }) => {
     );
     setCartItems(newCartItems);
 
-    const existItem = selectedItems.find((selectedItem) => selectedItem.id === item.id);
+    const isExist = isExistItem();
 
-    if (existItem) {
+    if (isExist) {
       const newSelectedItems = selectedItems.map((selectedItem) =>
         selectedItem.id === item.id ? { ...selectedItem, count: selectedItem.count - 1 } : selectedItem
       );
@@ -70,9 +75,9 @@ const CartItem: FC<CartItemProps> = ({ item }) => {
   };
 
   const handleItemCheckBox = () => {
-    const existItem = selectedItems.find((selectedItem) => selectedItem.id === item.id);
+    const isExist = isExistItem();
 
-    if (existItem) {
+    if (isExist) {
       const newSelectedItems = selectedItems.filter((selectedItem) => selectedItem.id !== item.id);
       setSelectedItems(newSelectedItems);
     } else {
@@ -89,6 +94,13 @@ const CartItem: FC<CartItemProps> = ({ item }) => {
       onOk: () => {
         const newCartItems = cartItems.filter((cartItem) => cartItem.id !== item.id);
         setCartItems(newCartItems);
+
+        const isExist = isExistItem();
+
+        if (isExist) {
+          const newSelectedItems = selectedItems.filter((selectedItem) => selectedItem.id !== item.id);
+          setSelectedItems(newSelectedItems);
+        }
 
         deleteCartItem(item.id);
       },
