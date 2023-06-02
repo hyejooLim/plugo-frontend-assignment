@@ -146,9 +146,9 @@ const ProductDetail: FC<ProductDetailProps> = ({ product, isLoading }) => {
             <div className='product_price'>{product?.price.toLocaleString()}원</div>
             <div className='size_selected_zone'>
               <p>Size</p>
-              <ul onClick={handleSizeButtonClick}>
+              <ul>
                 {sizes.map((size, idx) => (
-                  <button key={idx} className='size' data-size={size}>
+                  <button key={idx} className='size' data-size={size} onClick={handleSizeButtonClick}>
                     {size}
                   </button>
                 ))}
