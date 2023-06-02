@@ -18,7 +18,7 @@ const ProductList: FC<ProductListProps> = ({ products, isLoading }) => {
       ) : (
         <div className='row'>
           {products?.map((product) => (
-            <ProductCard product={product} />
+            <ProductCard key={product.id} product={product} />
           ))}
         </div>
       )}
