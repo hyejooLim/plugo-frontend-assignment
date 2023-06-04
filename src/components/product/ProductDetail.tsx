@@ -6,6 +6,7 @@ import { BsCartCheckFill } from 'react-icons/bs';
 
 import Loader from '../common/Loader';
 import Counter from '../common/Counter';
+import SizeSelectionZone from '../common/SizeSelectionZone';
 import { Product, SelectedOption } from '../../types';
 import { useCreateCartItems } from '../../hooks/query/cartItems';
 import * as S from '../../styles/product/ProductDetail';
@@ -45,29 +46,6 @@ const ProductDetail: FC<ProductDetailProps> = ({ product, isLoading }) => {
       },
     });
   }, []);
-
-  const handleSizeButtonClick = (e: any) => {
-    const { size } = e.target.dataset;
-
-    const optionIdx = selectedOptions.findIndex((option) => option.size === size);
-    let newSelectedOptions: SelectedOption[] = [];
-
-    if (optionIdx >= 0) {
-      newSelectedOptions = selectedOptions.map((option, idx) =>
-        idx === optionIdx ? { ...option, count: option.count + 1 } : option
-      );
-    } else {
-      newSelectedOptions = [
-        ...selectedOptions,
-        {
-          size,
-          count: 1,
-        },
-      ];
-    }
-
-    setSelectedOptions(newSelectedOptions);
-  };
 
   const handleOptionPlus = (target: string) => {
     const newSelectedOptions = selectedOptions.map((option) =>
@@ -144,16 +122,11 @@ const ProductDetail: FC<ProductDetailProps> = ({ product, isLoading }) => {
               {product?.name} - {product?.color.name}
             </div>
             <div className='product_price'>{product?.price.toLocaleString()}원</div>
-            <div className='size_selected_zone'>
-              <p>Size</p>
-              <ul>
-                {sizes.map((size, idx) => (
-                  <button key={idx} className='size' data-size={size} onClick={handleSizeButtonClick}>
-                    {size}
-                  </button>
-                ))}
-              </ul>
-            </div>
+            <SizeSelectionZone
+              sizes={sizes}
+              selectedOptions={selectedOptions}
+              setSelectedOptions={setSelectedOptions}
+            />
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               {selectedOptions.map((option) => (
                 <S.SelectedOptionBox>
