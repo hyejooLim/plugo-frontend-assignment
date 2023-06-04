@@ -1,14 +1,15 @@
-import { FC, ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 import { Modal } from 'antd';
-import { IoMdClose } from 'react-icons/io';
 import { BsCartCheckFill } from 'react-icons/bs';
 
 import Loader from '../common/Loader';
-import Counter from '../common/Counter';
 import SizeSelectionZone from '../common/SizeSelectionZone';
-import { Product, SelectedOption } from '../../types';
+import SelectedOption from '../common/SelectedOption';
+import { selectedItemsState } from '../../recoil/cart';
 import { useCreateCartItems } from '../../hooks/query/cartItems';
+import { Product } from '../../types';
 import * as S from '../../styles/product/ProductDetail';
 
 interface ProductDetailProps {
@@ -20,8 +21,8 @@ const sizes = ['XS', 'S', 'M', 'L', 'XL'];
 
 const ProductDetail: FC<ProductDetailProps> = ({ product, isLoading }) => {
   const navigate = useNavigate();
-  const [selectedOptions, setSelectedOptions] = useState<SelectedOption[]>([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [selectedOptions, setSelectedOptions] = useRecoilState(selectedItemsState);
 
   const { mutate: createCartItems, isSuccess: isSuccessCreateCartItems } = useCreateCartItems();
 
@@ -46,34 +47,6 @@ const ProductDetail: FC<ProductDetailProps> = ({ product, isLoading }) => {
       },
     });
   }, []);
-
-  const handleOptionPlus = (target: string) => {
-    const newSelectedOptions = selectedOptions.map((option) =>
-      option.size === target ? { ...option, count: option.count + 1 } : option
-    );
-    setSelectedOptions(newSelectedOptions);
-  };
-
-  const handleOptionMinus = (target: string) => {
-    const newSelectedOptions = selectedOptions.map((option) =>
-      option.size === target && option.count > 1 ? { ...option, count: option.count - 1 } : option
-    );
-    setSelectedOptions(newSelectedOptions);
-  };
-
-  const handleChangeOptionCount = (e: ChangeEvent<HTMLInputElement>) => {
-    const { dataset, value } = e.target;
-
-    const newSelectedOptions = selectedOptions.map((option) =>
-      option.size === dataset.target ? { ...option, count: Number(value) } : option
-    );
-    setSelectedOptions(newSelectedOptions);
-  };
-
-  const onRemoveSelectedOption = (e: any) => {
-    const newSelectedOptions = selectedOptions.filter((option) => option.size !== e.target.dataset.size);
-    setSelectedOptions(newSelectedOptions);
-  };
 
   const handleAddToCart = () => {
     if (selectedOptions.length === 0) {
@@ -129,20 +102,7 @@ const ProductDetail: FC<ProductDetailProps> = ({ product, isLoading }) => {
             />
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               {selectedOptions.map((option) => (
-                <S.SelectedOptionBox>
-                  <div className='size'>
-                    <span>{option.size}</span>
-                  </div>
-                  <Counter
-                    target={option.size}
-                    count={option.count}
-                    isAllowInputChange={true}
-                    onChangeTargetCount={handleChangeOptionCount}
-                    onPlusTarget={handleOptionPlus}
-                    onMinusTarget={handleOptionMinus}
-                  />
-                  <IoMdClose className='close_icon' data-size={option.size} onClick={onRemoveSelectedOption} />
-                </S.SelectedOptionBox>
+                <SelectedOption option={option} />
               ))}
               <div className='total_price'>Total {totalPrice.toLocaleString()}원</div>
             </div>
