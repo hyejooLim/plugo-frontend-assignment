@@ -3,7 +3,7 @@ import { useRecoilState } from 'recoil';
 import { IoMdClose } from 'react-icons/io';
 
 import Counter from '../common/Counter';
-import { selectedItemsState } from '../../recoil/cart';
+import { selectedOptionsState } from '../../recoil/productDetail';
 import { SelectedOption as SelectedOptionType } from '../../types';
 import { SelectedOptionWrapper } from '../../styles/common/SelectedOption';
 
@@ -12,7 +12,7 @@ interface SelectedOptionProps {
 }
 
 const SelectedOption: FC<SelectedOptionProps> = ({ option }) => {
-  const [selectedOptions, setSelectedOptions] = useRecoilState(selectedItemsState);
+  const [selectedOptions, setSelectedOptions] = useRecoilState(selectedOptionsState);
 
   const handleOptionPlus = (target: string) => {
     const newSelectedOptions = selectedOptions.map((option) =>

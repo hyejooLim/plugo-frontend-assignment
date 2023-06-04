@@ -7,7 +7,7 @@ import { BsCartCheckFill } from 'react-icons/bs';
 import Loader from '../common/Loader';
 import SizeSelectionZone from '../common/SizeSelectionZone';
 import SelectedOption from '../common/SelectedOption';
-import { selectedItemsState } from '../../recoil/cart';
+import { selectedOptionsState } from '../../recoil/productDetail';
 import { useCreateCartItems } from '../../hooks/query/cartItems';
 import { Product } from '../../types';
 import * as S from '../../styles/product/ProductDetail';
@@ -22,7 +22,7 @@ const sizes = ['XS', 'S', 'M', 'L', 'XL'];
 const ProductDetail: FC<ProductDetailProps> = ({ product, isLoading }) => {
   const navigate = useNavigate();
   const [totalPrice, setTotalPrice] = useState(0);
-  const [selectedOptions, setSelectedOptions] = useRecoilState(selectedItemsState);
+  const [selectedOptions, setSelectedOptions] = useRecoilState(selectedOptionsState);
 
   const { mutate: createCartItems, isSuccess: isSuccessCreateCartItems } = useCreateCartItems();
 
