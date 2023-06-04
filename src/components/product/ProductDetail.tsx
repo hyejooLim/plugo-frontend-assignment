@@ -17,9 +17,25 @@ interface ProductDetailProps {
   isLoading: boolean;
 }
 
+const product: Product = {
+  id: 17,
+  name: 'shoes4',
+  category: {
+    id: 4,
+    name: 'shoes',
+    products: [],
+    productsCount: 4,
+  },
+  color: { id: 2, name: 'PINK', products: [], productsCount: 5 },
+  imageUrl: 'https://img.pikbest.com/element_our/20220217/bg/da45570941039.png!w700wp',
+  price: 20000,
+  categoryId: 1,
+  colorId: 4,
+};
+
 const sizes = ['XS', 'S', 'M', 'L', 'XL'];
 
-const ProductDetail: FC<ProductDetailProps> = ({ product, isLoading }) => {
+const ProductDetail: FC<ProductDetailProps> = ({ isLoading }) => {
   const navigate = useNavigate();
   const [totalPrice, setTotalPrice] = useState(0);
   const [selectedOptions, setSelectedOptions] = useRecoilState(selectedOptionsState);
@@ -76,9 +92,7 @@ const ProductDetail: FC<ProductDetailProps> = ({ product, isLoading }) => {
   }, [selectedOptions]);
 
   useEffect(() => {
-    if (selectedOptions.length > 0) {
-      setTotalPrice(getTotalPrice());
-    }
+    selectedOptions.length > 0 ? setTotalPrice(getTotalPrice()) : setTotalPrice(0);
   }, [selectedOptions]);
 
   return (
