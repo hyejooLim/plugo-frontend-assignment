@@ -95,11 +95,7 @@ const ProductDetail: FC<ProductDetailProps> = ({ product, isLoading }) => {
               {product?.name} - {product?.color.name}
             </div>
             <div className='product_price'>{product?.price.toLocaleString()}원</div>
-            <SizeSelectionZone
-              sizes={sizes}
-              selectedOptions={selectedOptions}
-              setSelectedOptions={setSelectedOptions}
-            />
+            <SizeSelectionZone sizes={sizes} />
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               {selectedOptions.map((option) => (
                 <SelectedOption option={option} />

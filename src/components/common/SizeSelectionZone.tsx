@@ -1,15 +1,17 @@
 import { FC } from 'react';
+import { useRecoilState } from 'recoil';
 
 import { SelectedOption } from '../../types';
+import { selectedOptionsState } from '../../recoil/productDetail';
 import { SizeSelectedZoneWrapper } from '../../styles/common/SizeSelectedZone';
 
 interface SizeSelectionZoneProps {
   sizes: string[];
-  selectedOptions: SelectedOption[];
-  setSelectedOptions: React.Dispatch<React.SetStateAction<SelectedOption[]>>;
 }
 
-const SizeSelectionZone: FC<SizeSelectionZoneProps> = ({ sizes, selectedOptions, setSelectedOptions }) => {
+const SizeSelectionZone: FC<SizeSelectionZoneProps> = ({ sizes }) => {
+  const [selectedOptions, setSelectedOptions] = useRecoilState(selectedOptionsState);
+
   const handleSizeButtonClick = (e: any) => {
     const { size } = e.target.dataset;
 
