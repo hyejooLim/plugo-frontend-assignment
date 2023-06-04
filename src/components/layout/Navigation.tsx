@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Menu, { MenuProps } from 'antd/lib/menu';
 import { RxPerson } from 'react-icons/rx';
@@ -74,4 +74,4 @@ const Navigation = () => {
   );
 };
 
-export default Navigation;
+export default React.memo(Navigation);
