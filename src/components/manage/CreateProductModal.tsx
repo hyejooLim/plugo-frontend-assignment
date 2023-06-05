@@ -37,19 +37,15 @@ const CreateProductModal: FC<CreateProductModalProps> = ({ isOpen, onClose }) =>
 
   useEffect(() => {
     if (isSuccessCreateProduct) {
-      successCreateProduct();
+      toast.success('상품이 등록되었습니다.', {
+        autoClose: 2000,
+        position: toast.POSITION.TOP_RIGHT,
+        hideProgressBar: true,
+      });
+
+      handleModalClose();
     }
   }, [isSuccessCreateProduct]);
-
-  const successCreateProduct = () => {
-    toast.success('상품이 등록되었습니다.', {
-      autoClose: 2000,
-      position: toast.POSITION.TOP_RIGHT,
-      hideProgressBar: true,
-    });
-
-    handleModalClose();
-  };
 
   const initModalInput = () => {
     setName('');
