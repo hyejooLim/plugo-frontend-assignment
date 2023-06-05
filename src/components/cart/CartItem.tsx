@@ -21,7 +21,7 @@ const CartItem: FC<CartItemProps> = ({ item }) => {
 
   const { mutate: deleteCartItem } = useDeleteCartItem();
 
-  const isExistItem = () => {
+  const askIsExistItem = () => {
     const existItem = selectedItems.find((selectedItem) => selectedItem.id === item.id);
     return existItem ? true : false;
   };
@@ -36,7 +36,7 @@ const CartItem: FC<CartItemProps> = ({ item }) => {
     );
     setCartItems(newCartItems);
 
-    const isExist = isExistItem();
+    const isExist = askIsExistItem();
 
     if (isExist) {
       const newSelectedItems = selectedItems.map((selectedItem) =>
@@ -58,7 +58,7 @@ const CartItem: FC<CartItemProps> = ({ item }) => {
     );
     setCartItems(newCartItems);
 
-    const isExist = isExistItem();
+    const isExist = askIsExistItem();
 
     if (isExist) {
       const newSelectedItems = selectedItems.map((selectedItem) =>
@@ -75,7 +75,7 @@ const CartItem: FC<CartItemProps> = ({ item }) => {
   };
 
   const handleItemCheckBox = () => {
-    const isExist = isExistItem();
+    const isExist = askIsExistItem();
 
     if (isExist) {
       const newSelectedItems = selectedItems.filter((selectedItem) => selectedItem.id !== item.id);
@@ -95,7 +95,7 @@ const CartItem: FC<CartItemProps> = ({ item }) => {
         const newCartItems = cartItems.filter((cartItem) => cartItem.id !== item.id);
         setCartItems(newCartItems);
 
-        const isExist = isExistItem();
+        const isExist = askIsExistItem();
 
         if (isExist) {
           const newSelectedItems = selectedItems.filter((selectedItem) => selectedItem.id !== item.id);
