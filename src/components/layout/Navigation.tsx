@@ -52,19 +52,9 @@ const Navigation = () => {
     }
   }, [pathname]);
 
-  const handleMenuClick: MenuProps['onClick'] = (e) => {
-    setSelectedMenu(e?.key);
-  };
-
   return (
     <MenuWrapper mode='horizontal'>
-      <Menu
-        items={menuItems}
-        className='menu_item'
-        mode='horizontal'
-        selectedKeys={[selectedMenu]}
-        onClick={handleMenuClick}
-      />
+      <Menu items={menuItems} className='menu_item' mode='horizontal' selectedKeys={[selectedMenu]} />
       <ManageIconWrapper>
         <Link to={'/manage'}>
           <RxPerson />
