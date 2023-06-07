@@ -22,57 +22,37 @@ const CartItem: FC<CartItemProps> = ({ item }) => {
   const { mutate: deleteCartItem } = useDeleteCartItem();
 
   const askIsExistItem = () => {
-    const existItem = selectedItems.find((selectedItem) => selectedItem.id === item.id);
-    return existItem ? true : false;
+    return selectedItems.find((selectedItem) => selectedItem.id === item.id);
   };
 
   useEffect(() => {
     setCount(item.count);
   }, [item.count]);
 
-  const handleOptionPlus = () => {
-    const newCartItems = cartItems.map((cartItem) =>
-      cartItem.id === item.id ? { ...cartItem, count: cartItem.count + 1 } : cartItem
-    );
-    setCartItems(newCartItems);
-
-    const isExist = askIsExistItem();
-
-    if (isExist) {
-      const newSelectedItems = selectedItems.map((selectedItem) =>
-        selectedItem.id === item.id ? { ...selectedItem, count: selectedItem.count + 1 } : selectedItem
+  function handleOption(delta: number) {
+    return function () {
+      const newCartItems = cartItems.map((cartItem) =>
+        cartItem.id === item.id ? { ...cartItem, count: cartItem.count + delta } : cartItem
       );
-      setSelectedItems(newSelectedItems);
-    } else {
-      const newSelectedItems = selectedItems.concat({
-        ...item,
-        count: item.count + 1,
-      });
-      setSelectedItems(newSelectedItems);
-    }
-  };
+      setCartItems(newCartItems);
 
-  const handleOptionMinus = () => {
-    const newCartItems = cartItems.map((cartItem) =>
-      cartItem.id === item.id ? { ...cartItem, count: cartItem.count - 1 } : cartItem
-    );
-    setCartItems(newCartItems);
+      let newSelectedItems = [];
+      const isExist = askIsExistItem();
 
-    const isExist = askIsExistItem();
+      if (isExist) {
+        newSelectedItems = selectedItems.map((selectedItem) =>
+          selectedItem.id === item.id ? { ...selectedItem, count: selectedItem.count + delta } : selectedItem
+        );
+      } else {
+        newSelectedItems = selectedItems.concat({
+          ...item,
+          count: item.count + delta,
+        });
+      }
 
-    if (isExist) {
-      const newSelectedItems = selectedItems.map((selectedItem) =>
-        selectedItem.id === item.id ? { ...selectedItem, count: selectedItem.count - 1 } : selectedItem
-      );
       setSelectedItems(newSelectedItems);
-    } else {
-      const newSelectedItems = selectedItems.concat({
-        ...item,
-        count: item.count - 1,
-      });
-      setSelectedItems(newSelectedItems);
-    }
-  };
+    };
+  }
 
   const handleItemCheckBox = () => {
     const isExist = askIsExistItem();
@@ -124,8 +104,8 @@ const CartItem: FC<CartItemProps> = ({ item }) => {
       <Counter
         count={count}
         isAllowInputChange={false}
-        onPlusTarget={handleOptionPlus}
-        onMinusTarget={handleOptionMinus}
+        onPlusTarget={handleOption(1)}
+        onMinusTarget={handleOption(-1)}
       />
       <S.DeleteButton onClick={handleCartItemDelete}>삭제</S.DeleteButton>
     </S.CartItemWrapper>
