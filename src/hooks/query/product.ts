@@ -13,10 +13,6 @@ const useCreateProduct = () => {
   });
 };
 
-const useGetProduct = (id: number) =>
-  useQuery(['product', id], () => getProduct(id), {
-    staleTime: Infinity,
-    refetchOnWindowFocus: false,
-  });
+const useGetProduct = (id: number) => useQuery(['product', id], () => getProduct(id));
 
 export { useCreateProduct, useGetProduct };

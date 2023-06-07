@@ -22,8 +22,6 @@ const useGetCartItems = () => {
     onSuccess: (data) => {
       setCartItems(data);
     },
-    staleTime: Infinity,
-    refetchOnWindowFocus: false,
   });
 };
 

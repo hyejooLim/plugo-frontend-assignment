@@ -5,7 +5,14 @@ import { RecoilRoot } from 'recoil';
 
 import App from './App';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: Infinity,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 const root = ReactDOM.createRoot(document.querySelector('#root') as HTMLElement);
 
 root.render(
