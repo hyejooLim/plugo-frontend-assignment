@@ -29,7 +29,7 @@ const CartItem: FC<CartItemProps> = ({ item }) => {
     setCount(item.count);
   }, [item.count]);
 
-  function handleOption(delta: number) {
+  function handleOptionCount(delta: number) {
     return function () {
       const newCartItems = cartItems.map((cartItem) =>
         cartItem.id === item.id ? { ...cartItem, count: cartItem.count + delta } : cartItem
@@ -104,8 +104,8 @@ const CartItem: FC<CartItemProps> = ({ item }) => {
       <Counter
         count={count}
         isAllowInputChange={false}
-        onPlusTarget={handleOption(1)}
-        onMinusTarget={handleOption(-1)}
+        onPlusTarget={handleOptionCount(1)}
+        onMinusTarget={handleOptionCount(-1)}
       />
       <S.DeleteButton onClick={handleCartItemDelete}>삭제</S.DeleteButton>
     </S.CartItemWrapper>
