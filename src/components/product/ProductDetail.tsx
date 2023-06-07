@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { Modal } from 'antd';
@@ -21,7 +21,6 @@ const sizes = ['XS', 'S', 'M', 'L', 'XL'];
 
 const ProductDetail: FC<ProductDetailProps> = ({ product, isLoading }) => {
   const navigate = useNavigate();
-  const [totalPrice, setTotalPrice] = useState(0);
   const [selectedOptions, setSelectedOptions] = useRecoilState(selectedOptionsState);
 
   const { mutate: createCartItems, isSuccess: isSuccessCreateCartItems } = useCreateCartItems();
@@ -69,15 +68,10 @@ const ProductDetail: FC<ProductDetailProps> = ({ product, isLoading }) => {
     createCartItems({ data: newCartItems });
   };
 
-  const getTotalPrice = useCallback(() => {
-    const totalCount = selectedOptions.reduce((acc, option) => acc + option.count, 0);
-
-    return product?.price * totalCount;
-  }, [selectedOptions]);
-
-  useEffect(() => {
-    selectedOptions.length > 0 ? setTotalPrice(getTotalPrice()) : setTotalPrice(0);
-  }, [selectedOptions]);
+  const totalPrice = useMemo(
+    () => product.price * selectedOptions.reduce((acc, option) => acc + option.count, 0),
+    [product, selectedOptions]
+  );
 
   return (
     <S.ProductDetailWrapper>
