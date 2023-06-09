@@ -36,15 +36,13 @@ const CartItem: FC<CartItemProps> = ({ item }) => {
       );
       setCartItems(newCartItems);
 
-      let newSelectedItems = [];
-      const isExist = askIsExistItem();
+      let newSelectedItems = [...selectedItems];
+      const itemIdx = selectedItems.findIndex((selectedItem) => selectedItem.id === item.id);
 
-      if (isExist) {
-        newSelectedItems = selectedItems.map((selectedItem) =>
-          selectedItem.id === item.id ? { ...selectedItem, count: selectedItem.count + delta } : selectedItem
-        );
+      if (itemIdx !== -1) {
+        newSelectedItems[itemIdx] = { ...newSelectedItems[itemIdx], count: newSelectedItems[itemIdx].count + delta };
       } else {
-        newSelectedItems = selectedItems.concat({
+        newSelectedItems = newSelectedItems.concat({
           ...item,
           count: item.count + delta,
         });
